@@ -4,4 +4,6 @@ Qs3.ipynb transform the data from multiple prediction classes to only 2 classes 
 The folder Qs4_and_Qs5 contains the Docker container exposed via fastAPI to use the above exported models funcionalities.
 A simple UI is also added to call FastAPI endpoints!
 
+The models being too large are not included but are supposed to be in 'app' folder that is actually the docker container for fastAPI.
+
 GitRepo https://github.com/AftabKhalil/GoEmotionsDetection
