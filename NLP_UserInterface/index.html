@@ -1,0 +1,180 @@
+<html>
+<head>
+    <title>Aftab Khalil</title>
+    <link href="resources/bootstrap.css" rel="stylesheet" />
+    <script src="resources/jQuery.js"></script>
+    <script src="resources/bootstrap.js"></script>
+</head>
+<body>
+    </br>
+    <div class="container">
+        <div class="row text-danger">
+            <div class="col-sm-12"><h3>Data Science Product Development - Spring 2021 - HW1</h3></div>
+            <div class="col-sm-12"><h3>Submitted to : Dr Amir Ali Abdullah</h3></div>
+            <div class="col-sm-12"><h3>Submitted by : Aftab Khalil</h3></div>
+            <div class="col-sm-12"><h3>MSCS - 19837</h3></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="baseURL" value="http://localhost:7090/" placeholder="http://localhost:7090/">
+            </div>
+            <div class="col-sm-2"><span class="form-control btn btn-success" onclick="reconnect()">Reconnect</span></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">Application Status : <b> <span id="appStatus" class="text-success bold"></span></b></div>
+        </div>
+        <hr />
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2"><span class="btn btn-primary" onclick="install_dependencies()">Install dependencies</span></div>
+            <div class="col-sm-9">Please wait util its mention that dependencies are installed : <b><span id="resultInstallDependencies" class="text-success bold"></span></b></div>
+        </div>
+        <hr />
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2"><span class="btn btn-primary" onclick="initModels()">Init Models</span></div>
+            <div class="col-sm-9">Please wait util its mention that Models are initialized : <b><span id="initModelsResult" class="text-success bold"></span></b></div>
+        </div>
+        <hr />
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                Detect Emotion Binanry :
+            </div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="message_binary">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"><span class="btn btn-primary" onclick="predict_binary()">Predict Binary</span></div>
+            <div class="col-sm-9">Result of binary prediction is : <b><span id="resultBinary" class="text-success bold"></span></b></div>
+        </div>
+        <hr />
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                Detect Emotion Full :
+            </div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="message_full">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"><span class="btn btn-primary" onclick="predict_full()">Predict Full</span></div>
+            <div class="col-sm-9">Result of full prediction is : <b><span id="resultFull" class="text-success bold"></span></b></div>
+        </div>
+        <hr />
+    </div>
+
+    <script>
+        base_url = "http://localhost:7090/"
+
+        function reconnect() {
+            base_url = $('#baseURL').val();
+            $('#appStatus').text("");
+            app_status();
+        }
+
+        function app_status() {
+            $.ajax({
+                url: base_url,
+                method: "GET",
+                success: function (r) {
+                    console.log(r);
+                    $('#appStatus').text(r.message);
+                },
+                error: function (r) {
+                    console.log(r);
+                }
+            });
+        }
+        app_status();
+
+        function install_dependencies() {
+            $.ajax({
+                url: base_url + "install_dependencies/",
+                method: "GET",
+                success: function (r) {
+                    console.log(r);
+                    $('#resultInstallDependencies').text(r.message);
+                },
+                error: function (r) {
+                    console.log(r);
+                }
+            });
+        }
+
+        function initModels() {
+            $.ajax({
+                url: base_url + "load_model_binary/",
+                method: "GET",
+                success: function (r) {
+                    console.log(r);
+                    initModels2();
+                },
+                error: function (r) {
+                    console.log(r);
+                }
+            });
+        }
+
+        function initModels2() {
+            $.ajax({
+                url: base_url + "load_model_full/",
+                method: "GET",
+                success: function (r) {
+                    console.log(r);
+                    $('#initModelsResult').text("Models loadded");
+                },
+                error: function (r) {
+                    console.log(r);
+                }
+            });
+        }
+
+        function predict_binary() {
+            $.ajax({
+                url: base_url + "detect_emotion_binary/",
+                method: "GET",
+                data:
+                {
+                    message: $('#message_binary').val(),
+                },
+                success: function (r) {
+                    console.log(r);
+                    $('#resultBinary').text(r.message);
+                },
+                error: function (r) {
+                    console.log(r);
+                }
+            });
+        }
+
+        function predict_full() {
+            $.ajax({
+                url: base_url + "detect_emotion_full/",
+                method: "GET",
+                data:
+                {
+                    message: $('#message_full').val(),
+                },
+                success: function (r) {
+                    console.log(r);
+                    $('#resultFull').text(r.message);
+                },
+                error: function (r) {
+                    console.log(r);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

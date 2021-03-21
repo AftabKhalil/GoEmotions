@@ -1,0 +1,1 @@
+The docker file creates the fast api docker and exposses the NLP functionality to oitside world

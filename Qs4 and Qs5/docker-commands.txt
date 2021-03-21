@@ -1,0 +1,5 @@
+#To build the nlp engine image
+docker build -t nlp .
+
+#To create and run a docker container from above image on port 7090
+docker run -d --name nlp_container -p 7090:80 nlp

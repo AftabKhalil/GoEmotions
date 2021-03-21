@@ -1,0 +1,1 @@
+This is the UI, it provides a simple interface to call all the fastAPI endpoints.
